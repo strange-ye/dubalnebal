@@ -1,8 +1,8 @@
-package com.strangeye.dubalnebal.mapper;
+package com.strangeye.dubalnebal.dao;
 
-import com.strangeye.dubalnebal.domain.User;
+import com.strangeye.dubalnebal.dto.User;
 
-public interface UserMapper {
+public interface UserDao {
 
 	int insertUser(User user);
 	User selectUserByUserIdAndPassword(User user);

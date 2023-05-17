@@ -1,4 +1,4 @@
-package com.strangeye.dubalnebal.domain;
+package com.strangeye.dubalnebal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
 	private int id;
 	private String userId;
 	private String password;
