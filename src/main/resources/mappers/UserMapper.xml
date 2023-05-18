@@ -3,45 +3,51 @@
 <mapper namespace="com.strangeye.dubalnebal.dao.UserDao" >
 
     <resultMap id="userMap" type="com.strangeye.dubalnebal.dto.User">
-        <result column="id" property="id" />
         <result column="user_id" property="userId" />
-        <result column="password" property="password" />
-        <result column="nickname" property="nickname" />
-        <result column="profile_image" property="profileImage" />
+        <result column="user_identifier" property="userIdentifier" />
+        <result column="user_password" property="userPassword" />
+        <result column="user_name" property="userName" />
+        <result column="user_email" property="userEmail" />
+        <result column="user_image" property="userImage" />
     </resultMap>
 
     <insert id="insertUser" parameterType="com.strangeye.dubalnebal.dto.User">
-        INSERT INTO users
+        INSERT INTO USER
+        (
+            user_identifier,
+            user_password,
+            user_name,
+            user_email
+        )
+        VALUES
             (
-                user_id,
-                password,
-                nickname,
-                profile_image
-            )
-            VALUES
-            (
-                #{userId},
-                #{password},
-                #{nickname},
-                #{profileImage}
-            )
+                #{userIdentifier},
+                #{userPassword},
+                #{userName},
+                #{userEmail}
+            );
     </insert>
 
     <select id="selectUserByUserIdAndPassword" parameterType="com.strangeye.dubalnebal.dto.User" resultType="userMap">
         SELECT *
-        FROM users
-        WHERE user_id = #{userId}
-        AND password = #{password}
+        FROM user
+        WHERE user_identifier = #{userIdentifier}
+        AND user_password = #{userPassword};
     </select>
 
     <update id="updateUser" parameterType="com.strangeye.dubalnebal.dto.User">
-        UPDATE users
-        SET password = #{password}, nickname = #{nickname}, profile_image = #{profileImage}
+        UPDATE user
+        SET
+            user_password = #{userPassword}},
+            user_name = #{userName},
+            user_email = #{userEmail},
+            user_image = #{userImage}
+        WHERE user_identifier = #{userIdentifier}
     </update>
 
     <delete id="deleteUser" parameterType="com.strangeye.dubalnebal.dto.User">
-        DELETE users
-        WHERE user_id = #{userId}
+        DELETE FROM user
+        WHERE user_identifier = #{userIdentifier};
     </delete>
 
 </mapper>
