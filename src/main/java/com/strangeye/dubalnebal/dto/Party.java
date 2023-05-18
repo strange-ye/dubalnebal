@@ -1,5 +1,4 @@
-package com.strangeye.dubalnebal.domain;
-
+package com.strangeye.dubalnebal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +10,12 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Party {
+
 	private int id;
 	private String title;
 	private String description;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 	private int userId;
+
 }
