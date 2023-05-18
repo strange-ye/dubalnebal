@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserRestController {
 
-	@Autowired
-	private final Userservice userservice;
+//	@Autowired
+//	private final Userservice userservice;
 
-	@PostMapping("/login")
-	public ResponseEntity<Jwt>
 }
