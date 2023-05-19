@@ -3,13 +3,6 @@
 
 <mapper namespace="com.strangeye.dubalnebal.dao.UserDao" >
 
-    <resultMap id="commentMap" type="com.strangeye.dubalnebal.dto.Comment">
-        <result column="id" property="id" />
-        <result column="user_id" property="userId" />
-        <result column="password" property="password" />
-        <result column="nickname" property="nickname" />
-        <result column="profile_image" property="profileImage" />
-    </resultMap>
 
 
 </mapper>
