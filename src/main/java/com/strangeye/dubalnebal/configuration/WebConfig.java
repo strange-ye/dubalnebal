@@ -1,5 +1,6 @@
 package com.strangeye.dubalnebal.configuration;
 
+import com.strangeye.dubalnebal.Interceptor.JwtInterceptor;
 import com.strangeye.dubalnebal.Interceptor.SessionInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +21,14 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	// 인터셉터 설정 추가
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(sessionInterceptor).addPathPatterns("/regist");
-	}
+	@Autowired
+	private JwtInterceptor jwtInterceptor;
+
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(jwtInterceptor)
+//				.addPathPatterns("/**")
+//				.excludePathPatterns("/api/login");
+//	}
 
 }
