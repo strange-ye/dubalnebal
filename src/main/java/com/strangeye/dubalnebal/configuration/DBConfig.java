@@ -11,9 +11,4 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan (basePackages = "com.strangeye.dubalnebal.dao")
 public class DBConfig {
 
-//	@ConfigurationProperties(prefix = "spring.datasource")
-//	public DataSource dataSource() {
-//		return DataSourceBuilder.create().build();
-//	}
-
 }
