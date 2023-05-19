@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-	private static final String SALT = "SSAFIT";
+	private static final String SALT = "SSAFITKEYISNOTENOUGHTSOITSHOUWBELONGERTHANNOW";
 
 	//  토큰 생성
 	public String createToken(String claimId, String data) throws UnsupportedEncodingException {

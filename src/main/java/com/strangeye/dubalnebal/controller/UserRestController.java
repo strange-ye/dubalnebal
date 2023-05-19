@@ -1,7 +1,6 @@
 package com.strangeye.dubalnebal.controller;
 
 import com.strangeye.dubalnebal.dto.User;
-import com.strangeye.dubalnebal.service.BoardService;
 import com.strangeye.dubalnebal.service.UserService;
 import com.strangeye.dubalnebal.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,8 @@ public class UserRestController {
 	private static final String FAIL = "fail";
 
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(User user) {
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
+		System.out.println(user);
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		// user를 이용해서 Service -> Dao -> DB를 통해 실제 유저인지 확인을 해야한다.
@@ -36,13 +36,15 @@ public class UserRestController {
 		HttpStatus status = null;
 
 		try {
-			if (user.getUserIdentifier() != null || user.getUserIdentifier().length() > 0) {
-				result.put("access-token", jwtUtil.createToken("id", user.getUserIdentifier()));
+			if (user.getUser_identifier() != null || user.getUser_identifier().length() > 0) {
+				result.put("access-token", jwtUtil.createToken("id", user.getUser_identifier()));
 				result.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
+				System.out.println(SUCCESS);
 			} else {
 				result.put("message", FAIL);
 				status = HttpStatus.NO_CONTENT;
+				System.out.println(FAIL);
 			}
 		} catch (UnsupportedEncodingException e) {
 			result.put("message", FAIL);
@@ -59,8 +61,11 @@ public class UserRestController {
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/test")
-	public ResponseEntity<?> text() {
-		return new ResponseEntity<>("hi", HttpStatus.ACCEPTED);
+	@PostMapping("/update")
+	public ResponseEntity<Integer> update(@RequestBody User user) {
+		int result = userService.updateUser(user);
+		return new ResponseEntity<Integer>(result, HttpStatus.ACCEPTED);
 	}
+
+
 }

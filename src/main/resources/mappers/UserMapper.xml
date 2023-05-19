@@ -12,33 +12,33 @@
         )
         VALUES
             (
-                #{userIdentifier},
-                #{userPassword},
-                #{userName},
-                #{userEmail}
+                #{user_identifier},
+                #{user_password},
+                #{user_name},
+                #{user_email}
             );
     </insert>
 
     <select id="selectUserByUserIdAndPassword" parameterType="com.strangeye.dubalnebal.dto.User">
         SELECT *
         FROM user
-        WHERE user_identifier = #{userIdentifier}
-        AND user_password = #{userPassword};
+        WHERE user_identifier = #{user_identifier}
+        AND user_password = #{user_password};
     </select>
 
     <update id="updateUser" parameterType="com.strangeye.dubalnebal.dto.User">
         UPDATE user
         SET
-            user_password = #{userPassword}},
-            user_name = #{userName},
-            user_email = #{userEmail},
-            user_image = #{userImage}
-        WHERE user_identifier = #{userIdentifier}
+            user_password = #{user_password}},
+            user_name = #{user_name},
+            user_email = #{user_email},
+            user_image = #{user_image}
+        WHERE user_identifier = #{user_identifier}
     </update>
 
     <delete id="deleteUser" parameterType="com.strangeye.dubalnebal.dto.User">
         DELETE FROM user
-        WHERE user_identifier = #{userIdentifier};
+        WHERE user_identifier = #{user_identifier};
     </delete>
 
 </mapper>
