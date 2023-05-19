@@ -13,7 +13,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// request 에서 session 정보 얻기
+//		System.out.println(request);
+//		return true;
+//		 request 에서 session 정보 얻기
 		HttpSession session = request.getSession();
 		// 세션에 로그인 정보가 있다면 그대로 진행한다.
 		if(session.getAttribute("loginUser")!=null) {
