@@ -4,8 +4,20 @@
 
 
     <insert id="writeParty" parameterType="com.strangeye.dubalnebal.dto.Party">
-        INSERT INTO party (party_expired, party_depart, party_limitperson,course_id)
-        vALUES (#{party_expired}, #{party_depart},#{party_limitperson},#{course_id});
+        INSERT INTO party
+            (
+             party_expired,
+             party_depart,
+             party_limitperson,
+             course_id
+             )
+        VALUES
+            (
+             #{party_expired},
+             #{party_depart},
+             #{party_limitperson},
+             #{course_id}
+             );
     </insert>
 
 </mapper>

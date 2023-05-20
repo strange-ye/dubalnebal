@@ -11,5 +11,5 @@
         <result column="profile_image" property="profileImage" />
     </resultMap>
 
-
+    <select id=""
 </mapper>
