@@ -37,4 +37,10 @@ public class UserServiceImpl implements  UserService{
 	public User selectUserByUserIdAndPassword(String user_identifier, String user_password) {
 		return userDao.selectUserByUserIdAndPassword(user_identifier, user_password);
 	}
+
+	@Override
+	@Transactional
+	public User selectUserByIdentifier(String user_identifier) {
+		return userDao.selectUserByIdentifier(user_identifier);
+	}
 }

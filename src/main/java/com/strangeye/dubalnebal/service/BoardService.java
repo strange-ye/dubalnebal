@@ -1,10 +1,14 @@
 package com.strangeye.dubalnebal.service;
 
+import com.strangeye.dubalnebal.dao.BoardDao;
 import com.strangeye.dubalnebal.dto.Board;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public interface BoardService {
+
+
 	//게시글 전체조회
 	public List<Board> getBoardList();
 
@@ -12,10 +16,10 @@ public interface BoardService {
 	public Board detailBoard(int board_id);
 
 	//게시글 등록
-	public void writeBoard(Board board);
+	public Boolean writeBoard(Board board, int user_identifier);
 
 	//게시글 삭제
-	public void removeBoard(int board_id);
+	public Boolean removeBoard(int board_id);
 
 	//게시글 수정
 	public void modifyBoard(Board board);
