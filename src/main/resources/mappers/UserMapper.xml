@@ -29,7 +29,7 @@
     <update id="updateUser" parameterType="com.strangeye.dubalnebal.dto.User">
         UPDATE user
         SET
-            user_password = #{user_password}},
+            user_password = #{user_password},
             user_name = #{user_name},
             user_email = #{user_email},
             user_image = #{user_image}
@@ -41,4 +41,9 @@
         WHERE user_identifier = #{user_identifier};
     </delete>
 
+    <select id="selectUserByIdentifier" parameterType="com.strangeye.dubalnebal.dto.User">
+        SELECT *
+        FROM user
+        WHERE user_identifier = #{user_identifier}
+    </select>
 </mapper>

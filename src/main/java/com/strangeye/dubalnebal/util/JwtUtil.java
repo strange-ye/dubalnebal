@@ -1,10 +1,12 @@
 package com.strangeye.dubalnebal.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
@@ -25,5 +27,13 @@ public class JwtUtil {
 	// 유효성 검사
 	public void valid(String token) throws UnsupportedEncodingException {
 		Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(token);
+	}
+
+	public Claims decodeToken(String token) throws UnsupportedEncodingException {
+		Claims claims = Jwts.parser()
+				.setSigningKey(SALT.getBytes("UTF-8"))
+				.parseClaimsJws(token)
+				.getBody();
+		return claims;
 	}
 }

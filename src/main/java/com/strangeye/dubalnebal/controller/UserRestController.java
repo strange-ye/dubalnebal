@@ -3,6 +3,8 @@ package com.strangeye.dubalnebal.controller;
 import com.strangeye.dubalnebal.dto.User;
 import com.strangeye.dubalnebal.service.UserService;
 import com.strangeye.dubalnebal.util.JwtUtil;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,6 @@ public class UserRestController {
 
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
-		System.out.println(user);
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		// user를 이용해서 Service -> Dao -> DB를 통해 실제 유저인지 확인을 해야한다.
@@ -40,11 +41,9 @@ public class UserRestController {
 				result.put("access-token", jwtUtil.createToken("id", user.getUser_identifier()));
 				result.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
-				System.out.println(SUCCESS);
 			} else {
 				result.put("message", FAIL);
 				status = HttpStatus.NO_CONTENT;
-				System.out.println(FAIL);
 			}
 		} catch (UnsupportedEncodingException e) {
 			result.put("message", FAIL);
@@ -56,13 +55,20 @@ public class UserRestController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<Integer> signup(@RequestBody User user) {
-		System.out.println(user);
 		int result = userService.insertUser(user);
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Integer> update(@RequestBody User user) {
+	public ResponseEntity<Integer> update(@RequestBody User user, HttpServletRequest request) throws UnsupportedEncodingException {
+		String token = request.getHeader("HEADER_AUTH");
+		Claims claims = jwtUtil.decodeToken(token);
+
+		String claimId = "id";
+		String user_identifier= claims.get(claimId, String.class);
+		user.setUser_identifier(user_identifier);
+
+		System.out.println(user);
 		int result = userService.updateUser(user);
 		return new ResponseEntity<Integer>(result, HttpStatus.ACCEPTED);
 	}

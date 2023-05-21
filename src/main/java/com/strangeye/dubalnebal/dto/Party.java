@@ -11,11 +11,13 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Party {
 
-	private int id;
-	private String title;
-	private String description;
-	private Timestamp createdAt;
-	private Timestamp updatedAt;
+	private Integer party_id;
+	private Timestamp party_duration;
+	private String party_title;
+	private String party_description;
+	private Timestamp party_created_at;
+	private Timestamp party_updated_at;
+	private Integer party_limit;
 	private int userId;
 
 }
