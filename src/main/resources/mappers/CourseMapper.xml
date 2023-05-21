@@ -3,6 +3,9 @@
 
 <mapper namespace="com.strangeye.dubalnebal.dao.CourseDao" >
 
-
-    <select id=""
+    <select id="selectOne" resultType="com.strangeye.dubalnebal.dto.Course">
+        SELECT *
+        FROM course
+        WHERE course_id = #{course_id}
+    </select>
 </mapper>
