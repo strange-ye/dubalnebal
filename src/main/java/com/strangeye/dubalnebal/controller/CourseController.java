@@ -1,7 +1,7 @@
 package com.strangeye.dubalnebal.controller;
 
-import com.strangeye.dubalnebal.dao.CourseDao;
 import com.strangeye.dubalnebal.dto.Course;
+import com.strangeye.dubalnebal.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CourseController {
 
 	@Autowired
-	CourseDao courseDao;
+	CourseService courseService;
 
 	@GetMapping("/course/{id}")
 	public ResponseEntity<?> course(@PathVariable String id) {
-		Course course = courseDao.findPoemById(String id);
+		Course course = courseService.findCourseById(id);
 		return new ResponseEntity<>(course, HttpStatus.OK);
 	}
 }
