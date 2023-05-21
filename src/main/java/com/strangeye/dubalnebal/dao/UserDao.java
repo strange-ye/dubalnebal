@@ -12,6 +12,7 @@ public interface UserDao {
 	User selectUserByUserIdAndPassword(String user_identifier, String user_password);
 	int updateUser(User user);
 	int deleteUser(String user);
+	User selectUserByIdentifier(String user_identifier);
 
 	User selectUserByIdentifier(String user_identifier);
 

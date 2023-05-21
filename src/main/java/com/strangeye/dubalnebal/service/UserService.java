@@ -9,4 +9,5 @@ public interface UserService {
 	User selectUserByUserIdAndPassword(String user_identifier, String user_password);
 	User selectUserByIdentifier(String user_identifier);
 
+	User selectUserByIdentifier(String user_identifier);
 }

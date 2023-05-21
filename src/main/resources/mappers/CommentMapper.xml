@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.strangeye.dubalnebal.dao.UserDao" >
+<mapper namespace="com.strangeye.dubalnebal.dao.CommentDao" >
 
+<!--전체댓글 나오게-->
+    <select id="selectAll" parameterType="Integer" resultType="com.strangeye.dubalnebal.dto.Comment">
+        select comment_id, comment_content , date_format(comment_updated_at, '%y-%m-%d %H:%i:%s') as comment_updated_at , date_format(comment_created_at, '%y-%m-%d') as comment_created_at,
+        user_name, user_image
+        from
+        board b
+        inner join comment c on b.board_id = c.board_board_id
+        inner join user u on u.user_id = c.board_user_user_id
+        where c.Board_board_id = #{board_id}
+    </select>
+
+    <!--댓글 작성-->
+    <insert id="insertComment" parameterType="com.strangeye.dubalnebal.dto.Comment" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO comment (board_id, user_id, comment_content, comment_created_at)
+        VALUES (#{board_id}, #{user_id}, #{comment_content}, comment_created_at = NOW())
+    </insert>
+
+    <!--댓글 삭제-->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM comment
+        WHERE comment_id = #{comment_id}
+    </delete>
+    
+    <!--comment modify-->
+    <update id="updateComment" parameterType="com.strangeye.dubalnebal.dto.Comment">
+        UPDATE comment SET comment_content = #{comment_content}, comment_updated_at = NOW()
+        WHERE comment_id = #{comment_id}
+    </update>
 
 
 </mapper>

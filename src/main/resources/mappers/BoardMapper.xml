@@ -3,6 +3,7 @@
 
 <mapper namespace="com.strangeye.dubalnebal.dao.BoardDao" >
 
+
     <!-- 전체글 조회 -->
     <select id="selectAll" resultType="com.strangeye.dubalnebal.dto.Board">
         SELECT board_id, board_content , board_title , board_view_cnt , date_format(board_updated_at, '%y-%m-%d %H:%i:%s') as board_updated_at , date_format(board_created_at, '%y-%m-%d') as board_created_at,
@@ -10,6 +11,7 @@
         FROM board b
         inner join user u on u.user_id = b.User_user_id;
     </select>
+
 
     <!-- 상세글 조회-->
     <select id="selectOne" parameterType="int" resultType="com.strangeye.dubalnebal.dto.Board">
@@ -20,18 +22,17 @@
         WHERE u.user_id = #{User_user_id};
     </select>
 
-
     <!-- 게시글 등록 -->
     <insert id="insertBoard" parameterType="com.strangeye.dubalnebal.dto.Board" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO board (board_id , board_content, board_title, board_image)
-        VALUES (#{board_id}, #{board_content}, #{board_title}, #{board_image} )
+        INSERT INTO board (board_content, board_title, user_id, board_image)
+        VALUES (#{board_content}, #{board_title}, #{user_id}, #{board_image} )
     </insert>
 
 
     <!-- 게시글 삭제 -->
     <delete id="deleteBoard" parameterType="int">
         DELETE FROM board
-        WHERE borad_id = #{board_id}
+        WHERE board_id = #{board_id}
     </delete>
 
 

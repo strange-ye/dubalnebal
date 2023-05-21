@@ -13,13 +13,13 @@ public interface BoardDao {
 	public Board selectOne(int board_id);
 
 	// 게시글 등록
-	public void insertBoard(Board board);
+	public int insertBoard(Board board, int user_id);
 
 	// 게시글 삭제
-	public void deleteBoard(int board_id);
+	public int deleteBoard(int board_id);
 
 	// 게시글 수정
-	public void updateBoard(Board board);
+	public int updateBoard(Board board);
 
 	// 조회수 증가
 	public void updateViewCnt(int board_id);
