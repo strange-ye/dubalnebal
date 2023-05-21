@@ -17,6 +17,8 @@ public class CourseController {
 	@Autowired
 	CourseService courseService;
 
+	// 주소로 코스 id를 입력 받는다.
+	// 그리고 id로 코스를 검색해서 찾아온다.
 	@GetMapping("/course/{id}")
 	public ResponseEntity<?> course(@PathVariable String id) {
 		Course course = courseService.findCourseById(id);

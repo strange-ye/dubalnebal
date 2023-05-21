@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.strangeye.dubalnebal.dao.UserDao" >
 
+    <!-- 회원가입 로직. 사용자를 추가 -->
     <insert id="insertUser" parameterType="com.strangeye.dubalnebal.dto.User">
         INSERT INTO user
         (
@@ -19,6 +20,7 @@
             );
     </insert>
 
+    <!-- 로그인에 사용되는 매퍼. 로그인 아이디와 비밀번호로 사용자 정보를 찾아온다. -->
     <select id="selectUserByUserIdAndPassword" parameterType="com.strangeye.dubalnebal.dto.User">
         SELECT *
         FROM user
@@ -26,6 +28,7 @@
         AND user_password = #{user_password};
     </select>
 
+    <!-- 사용자 정보를 업데이트. 로그인 아이디는 token에서 가져오고, 나머지는 제출 받은 form에서 가져온다. -->
     <update id="updateUser" parameterType="com.strangeye.dubalnebal.dto.User">
         UPDATE user
         SET
@@ -36,11 +39,13 @@
         WHERE user_identifier = #{user_identifier}
     </update>
 
-    <delete id="deleteUser" parameterType="com.strangeye.dubalnebal.dto.User">
+    <!-- 로그인 아이디로 사용자를 찾아서 삭제 -->
+    <delete id="deleteUser" >
         DELETE FROM user
         WHERE user_identifier = #{user_identifier};
     </delete>
 
+    <!-- 로그인 아이디로 사용자 정보를 찾아온다. 토큰이 로그인 아이디만 저장하므로, 토큰(로그인)이 필요한 로직에서 사용 -->
     <select id="selectUserByIdentifier" parameterType="com.strangeye.dubalnebal.dto.User">
         SELECT *
         FROM user

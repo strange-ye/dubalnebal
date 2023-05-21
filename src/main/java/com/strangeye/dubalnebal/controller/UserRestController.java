@@ -26,6 +26,7 @@ public class UserRestController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
+	// 로그인. 사용자 정보를 받아서 db에 추가한다.
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -53,12 +54,14 @@ public class UserRestController {
 		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
 
+	// 회원가입. 사용자 정보를 받아서 회원가입한다.
 	@PostMapping("/signup")
 	public ResponseEntity<Integer> signup(@RequestBody User user) {
 		int result = userService.insertUser(user);
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 
+	// 기존에 존재하는 사용자의 데이터를 업데이트 해준다.
 	@PostMapping("/update")
 	public ResponseEntity<Integer> update(@RequestBody User user, HttpServletRequest request) throws UnsupportedEncodingException {
 		String token = request.getHeader("HEADER_AUTH");
@@ -68,10 +71,21 @@ public class UserRestController {
 		String user_identifier= claims.get(claimId, String.class);
 		user.setUser_identifier(user_identifier);
 
-		System.out.println(user);
 		int result = userService.updateUser(user);
 		return new ResponseEntity<Integer>(result, HttpStatus.ACCEPTED);
 	}
 
+	// 로그인 된 사용자 정보 삭제
+	@PostMapping("/delete")
+	public ResponseEntity<Integer> delete(HttpServletRequest request) throws UnsupportedEncodingException {
+		String token = request.getHeader("HEADER_AUTH");
+		Claims claims = jwtUtil.decodeToken(token);
+
+		String claimId = "id";
+		String user_identifier= claims.get(claimId, String.class);
+
+		int result = userService.deleteUser(user_identifier);
+		return new ResponseEntity<Integer>(result, HttpStatus.ACCEPTED);
+	}
 
 }
