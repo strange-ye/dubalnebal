@@ -11,7 +11,24 @@ public class PartyServiceImpl implements PartyService{
 	PartyDao partyDao;
 
 	@Override
-	public int writeParty(Party party) {
+	public int createParty(Party party) {
 		return partyDao.writeParty(party);
 	}
+
+
+	@Override
+	public Party readParty(int party_id) {
+		return partyDao.selectParty(party_id);
+	}
+
+	@Override
+	public int updateParty(Party party) {
+		return partyDao.updateParty(party);
+	}
+
+	@Override
+	public int deleteParty(int party_id) {
+		return partyDao.deleteParty(party_id);
+	}
+
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/course")
 public class CourseController {
 
 	@Autowired
@@ -19,7 +19,7 @@ public class CourseController {
 
 	// 주소로 코스 id를 입력 받는다.
 	// 그리고 id로 코스를 검색해서 찾아온다.
-	@GetMapping("/course/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> course(@PathVariable String id) {
 		Course course = courseService.findCourseById(id);
 		return new ResponseEntity<>(course, HttpStatus.OK);
