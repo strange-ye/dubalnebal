@@ -13,11 +13,11 @@ public class Party {
 
 	private Integer party_id;
 	private Timestamp party_duration;
-	private String party_title;
-	private String party_description;
 	private Timestamp party_created_at;
-	private Timestamp party_updated_at;
+	private Timestamp party_depart_date;
 	private Integer party_limit;
-	private int userId;
+	private Integer course_id;
+	private Integer user_id;
+	private String party_title;
 
 }
