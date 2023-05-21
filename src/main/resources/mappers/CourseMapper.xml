@@ -3,6 +3,7 @@
 
 <mapper namespace="com.strangeye.dubalnebal.dao.CourseDao" >
 
+    <!-- course의 id로 정보를 가져온다.-->
     <select id="selectOne" resultType="com.strangeye.dubalnebal.dto.Course">
         SELECT *
         FROM course
