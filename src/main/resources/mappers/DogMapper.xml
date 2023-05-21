@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.strangeye.dubalnebal.dao.UserDao" >
+<mapper namespace="com.strangeye.dubalnebal.dao.DogDao" >
 
 
+    <!-- 개와 주인 정보 inner join, 강아지 정보 보기 -->
+    <select id="selectDog" parameterType="com.strangeye.dubalnebal.dto.Dog">
+        SELECT dog_id, dog_name, dog_age, dog_gender, dog_type ,dog_image, user_identifier
+        FROM Dog d
+        inner join user u on u.user_id = d.User_user_id;
+    </select>
+
+    <!-- 개 추가-->
+    <insert id="insertDog" parameterType="com.strangeye.dubalnebal.dto.Dog" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO dog (dog_name, dog_age, dog_gender, dog_type, dog_image, User_user_id)
+        VALUES
+            (
+                #{dog_name},
+                #{dog_age},
+                #{dog_gender},
+                #{dog_type},
+                #{dog_image},
+                #{user_identifier}
+            )
+    </insert>
+
+    <!-- 개 정보 수정 -->
+    <update id="updateDog" parameterType="com.strangeye.dubalnebal.dto.Dog">
+        UPDATE dog
+        SET dog_name = #{dog_name} , dog_age = #{dog_age} , dog_gender = #{dog_gender} , dog_type = #{dog_type} , dog_image = #{dog_image}
+        WHERE dog_id = #{dog_id};
+    </update>
+
+    <!-- 개 삭제 -->
+    <delete id="deleteDog" parameterType="int">
+        DELETE FROM dog
+        WHERE dog_id = #{dog_id};
+    </delete>
 
 </mapper>

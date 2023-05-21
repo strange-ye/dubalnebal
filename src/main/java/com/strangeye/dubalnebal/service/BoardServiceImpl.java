@@ -14,8 +14,6 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	BoardDao boardDao;
 
-
-
 	@Override
 	public List<Board> getBoardList(){
 		return  boardDao.selectAll();
@@ -28,8 +26,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Boolean writeBoard(Board board , int user_id) {
-		 return boardDao.insertBoard(board, user_id) == 1;
+	public Boolean writeBoard(Board board) {
+		 return boardDao.insertBoard(board) == 1;
 	}
 
 	@Override

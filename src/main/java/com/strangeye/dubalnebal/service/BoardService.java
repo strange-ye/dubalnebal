@@ -16,7 +16,7 @@ public interface BoardService {
 	public Board detailBoard(int board_id);
 
 	//게시글 등록
-	public Boolean writeBoard(Board board, int user_identifier);
+	public Boolean writeBoard(Board board);
 
 	//게시글 삭제
 	public Boolean removeBoard(int board_id);
