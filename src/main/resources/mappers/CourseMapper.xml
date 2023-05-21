@@ -4,5 +4,5 @@
 <mapper namespace="com.strangeye.dubalnebal.dao.CourseDao" >
 
 
-
+    <select id=""
 </mapper>

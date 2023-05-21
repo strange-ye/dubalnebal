@@ -43,4 +43,5 @@ public class UserServiceImpl implements  UserService{
 	public User selectUserByIdentifier(String user_identifier) {
 		return userDao.selectUserByIdentifier(user_identifier);
 	}
+
 }
