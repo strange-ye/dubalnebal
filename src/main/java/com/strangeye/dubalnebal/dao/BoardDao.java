@@ -1,6 +1,7 @@
 package com.strangeye.dubalnebal.dao;
 
 import com.strangeye.dubalnebal.dto.Board;
+import com.strangeye.dubalnebal.dto.SerchCondition;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public interface BoardDao {
 
 	// 조회수 증가
 	public void updateViewCnt(int board_id);
+
+	//검색기능
+	public List<Board> search(SerchCondition condition);
 
 
 }

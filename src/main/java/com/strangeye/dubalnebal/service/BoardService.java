@@ -2,7 +2,9 @@ package com.strangeye.dubalnebal.service;
 
 import com.strangeye.dubalnebal.dao.BoardDao;
 import com.strangeye.dubalnebal.dto.Board;
+import com.strangeye.dubalnebal.dto.SerchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public interface BoardService {
 	public Board detailBoard(int board_id);
 
 	//게시글 등록
-	public Boolean writeBoard(Board board, int user_identifier);
+	Boolean writeBoard(Board board, int user_id);
 
 	//게시글 삭제
 	public Boolean removeBoard(int board_id);
@@ -26,5 +28,7 @@ public interface BoardService {
 
 	//view count
 	public void updateViewCnt(int board_id);
+
+	public List<Board> search(SerchCondition condition);
 
 }
