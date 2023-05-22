@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.strangeye.dubalnebal.dao.LikeDao" >
+
+    <insert id="insertLike" parameterType="Map">
+        INSERT INTO BoardLike
+        VALUES (#{user_id}, #{board_id});
+    </insert>
+
+    <delete id="insertDislike" parameterType="Map">
+        DELETE FROM BoardLike
+        WHERE user_id = #{userId} AND board_id = #{board_id};
+    </delete>
+
+
+    <select id="selectLikeCnt" parameterType="int">
+        SELECT COUNT(board_id)
+        FROM BoardLike
+        WHERE
+    </select>
+
+
+    <update id="minusLikeCount" parameterType="int">
+        UPDATE BoardLike
+        SET like = like - 1
+        WHERE board_id = #{board_id};
+    </update>
+
+
+
+</mapper>
