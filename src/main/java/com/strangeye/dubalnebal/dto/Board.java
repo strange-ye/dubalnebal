@@ -22,5 +22,7 @@ public class Board {
 	private String board_image;
 	private String user_name;
 
+	private String filepath;
+
 }
 

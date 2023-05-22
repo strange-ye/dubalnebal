@@ -2,7 +2,9 @@ package com.strangeye.dubalnebal.service;
 
 import com.strangeye.dubalnebal.dao.BoardDao;
 import com.strangeye.dubalnebal.dto.Board;
+import com.strangeye.dubalnebal.dto.SerchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,5 +28,7 @@ public interface BoardService {
 
 	//view count
 	public void updateViewCnt(int board_id);
+
+	public List<Board> search(SerchCondition condition);
 
 }

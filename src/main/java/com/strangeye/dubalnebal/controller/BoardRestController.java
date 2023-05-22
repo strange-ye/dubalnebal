@@ -1,6 +1,7 @@
 package com.strangeye.dubalnebal.controller;
 
 import com.strangeye.dubalnebal.dto.Board;
+import com.strangeye.dubalnebal.dto.SerchCondition;
 import com.strangeye.dubalnebal.dto.User;
 import com.strangeye.dubalnebal.service.BoardService;
 import com.strangeye.dubalnebal.service.UserService;
@@ -11,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
 
 @RestController
 @RequestMapping("/api")
@@ -33,8 +36,9 @@ public class BoardRestController {
 
 	// 게시판 가져와
 	@GetMapping("/board")
-	public ResponseEntity<?> list(){
-		List<Board> list = boardService.getBoardList();
+	public ResponseEntity<?> list(SerchCondition condition){
+//		List<Board> list = boardService.getBoardList();
+		List<Board> list = boardService.search(condition);
 
 		if(list == null || list.size() == 0)
 			return  new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -52,7 +56,7 @@ public class BoardRestController {
 
 	//게시판 등록하기
 	@PostMapping("/board")
-	public ResponseEntity<Board> write(@RequestBody Board board, HttpServletRequest request) throws UnsupportedEncodingException {
+	public ResponseEntity<Board> write(@RequestBody Board board, HttpServletRequest request) throws Exception {
 		System.out.println(board);
 		String token = request.getHeader("HEADER_AUTH");
 		Claims claims = jwtUtil.decodeToken(token);
@@ -61,6 +65,7 @@ public class BoardRestController {
 		String user_identifier= claims.get(claimId, String.class);
 		System.out.println(user_identifier);
 		User user_found = userService.selectUserByIdentifier(user_identifier);
+
 		System.out.println(user_found);
 		board.setUser_id(user_found.getUser_id());
 		boardService.writeBoard(board);

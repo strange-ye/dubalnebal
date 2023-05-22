@@ -6,7 +6,7 @@
     <!-- 전체글 조회 -->
     <select id="selectAll" resultType="com.strangeye.dubalnebal.dto.Board">
         SELECT board_id, board_content , board_title , board_view_cnt , date_format(board_updated_at, '%y-%m-%d %H:%i:%s') as board_updated_at , date_format(board_created_at, '%y-%m-%d') as board_created_at,
-               board_image, user_name
+               category, board_image, user_name
         FROM board b
         inner join user u on u.user_id = b.User_user_id;
     </select>
@@ -14,7 +14,7 @@
     <!-- 상세글 조회-->
     <select id="selectOne" parameterType="int" resultType="com.strangeye.dubalnebal.dto.Board">
         SELECT board_id, board_content, board_title, board_view_cnt, DATE_FORMAT(board_updated_at, '%y-%m-%d %H:%i:%s') AS board_updated_at, DATE_FORMAT(board_created_at, '%y-%m-%d') AS board_created_at,
-               board_image, user_name
+               category, board_image, user_name
         FROM board b
         INNER JOIN user u ON u.user_id = b.User_user_id
         WHERE u.user_id = #{User_user_id};
@@ -22,8 +22,8 @@
 
     <!-- 게시글 등록 -->
     <insert id="insertBoard" parameterType="com.strangeye.dubalnebal.dto.Board">
-        INSERT INTO board (board_content, board_title, User_user_id, board_image)
-        VALUES (#{board_content}, #{board_title}, #{user_id}, #{board_image} )
+        INSERT INTO board (board_content, board_title, User_user_id, board_image, category, )
+        VALUES (#{board_content}, #{board_title}, #{user_id}, #{board_image}, #{category} )
     </insert>
 
     <!-- 게시글 삭제 -->
@@ -40,10 +40,25 @@
     </update>
 
     <!-- 게시글 수정 -->
-    <update id="updateBoard" parameterType="com.strangeye.dubalnebal.dto.Board">
+    <update id="updateBoard" parameterType="Board">
         UPDATE board
         SET board_title = #{board_title}, board_content=#{board_content}, board_updated_at = now()
         WHERE board_id= #{board_id}
     </update>
+
+    <!--검색기능 -->
+    <select id="search" resultType="com.strangeye.dubalnebal.dto.Board">
+        SELECT board_id, board_content , board_title , board_view_cnt , date_format(board_updated_at, '%y-%m-%d %H:%i:%s') as board_updated_at , date_format(board_created_at, '%y-%m-%d') as board_created_at,
+               board_image, user_name
+        FROM board b
+        inner join user u on u.user_id = b.User_user_id;
+        <if test="key != 'none'">
+            WHERE ${key} LIKE concat('%', #{word}, '%')
+        </if>
+
+        <if test="orderBy != 'none' ">
+            ORDER BY ${orderBy} ${orderByDir}
+        </if>
+    </select>
 
 </mapper>
