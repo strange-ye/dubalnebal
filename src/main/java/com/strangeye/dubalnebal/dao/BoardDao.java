@@ -14,7 +14,7 @@ public interface BoardDao {
 	public Board selectOne(int board_id);
 
 	// 게시글 등록
-	public int insertBoard(Board board, int user_id);
+	public int insertBoard(Board board);
 
 	// 게시글 삭제
 	public int deleteBoard(int board_id);

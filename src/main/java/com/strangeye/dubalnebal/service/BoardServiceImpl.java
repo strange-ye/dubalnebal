@@ -17,7 +17,6 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	BoardDao boardDao;
 
-
 	@Override
 	public List<Board> getBoardList(){
 		return  boardDao.selectAll();
@@ -32,8 +31,9 @@ public class BoardServiceImpl implements BoardService{
 
 
 	@Override
-	public Boolean writeBoard(Board board, int user_id){
 
+	public Boolean writeBoard(Board board) {
+    
 //		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static.files";
 //
 //		UUID uuid = UUID.randomUUID(); //식별자 랜덤 이름 만들어줌
@@ -46,12 +46,11 @@ public class BoardServiceImpl implements BoardService{
 //
 //		board.setBoard_image();
 //		board.setFilepath();
-
-		return boardDao.insertBoard(board, user_id) == 1;
+    
+		 return boardDao.insertBoard(board) == 1;
+    
 	}
-
-
-
+  
 	@Override
 	public Boolean removeBoard(int board_id) {
 		return boardDao.deleteBoard(board_id) == 1;

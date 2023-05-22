@@ -46,7 +46,7 @@
     </delete>
 
     <!-- 로그인 아이디로 사용자 정보를 찾아온다. 토큰이 로그인 아이디만 저장하므로, 토큰(로그인)이 필요한 로직에서 사용 -->
-    <select id="selectUserByIdentifier" parameterType="com.strangeye.dubalnebal.dto.User">
+    <select id="selectUserByIdentifier" resultType="com.strangeye.dubalnebal.dto.User">
         SELECT *
         FROM user
         WHERE user_identifier = #{user_identifier}

@@ -63,9 +63,12 @@ public class BoardRestController {
 
 		String claimId = "id";
 		String user_identifier= claims.get(claimId, String.class);
+		System.out.println(user_identifier);
 		User user_found = userService.selectUserByIdentifier(user_identifier);
-		boardService.writeBoard(board, user_found.getUser_id());
 
+		System.out.println(user_found);
+		board.setUser_id(user_found.getUser_id());
+		boardService.writeBoard(board);
 		return  new ResponseEntity<Board>(board, HttpStatus.CREATED);
 	}
 
