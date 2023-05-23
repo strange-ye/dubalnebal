@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -99,20 +101,56 @@ public class BoardRestController {
 		int id = like.getBoard_board_id();
 		if(likeService.hasLike(like)){
 			if(likeService.removeLike(like)){
-				boardService.unlike(id);
-				Board board = boardService.detailBoard(id);
-				return new ResponseEntity<Board>(board, HttpStatus.OK);
+//				boardService.unlike(id);
+//				Board board = boardService.detailBoard(id);
+				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
 		else{
 			if(likeService.pushLike(like)){
-				boardService.dolike(id);
-				Board board = boardService.detailBoard(id);
-				return new ResponseEntity<Board>(board, HttpStatus.OK);
+//				boardService.dolike(id);
+//				Board board = boardService.detailBoard(id);
+				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
+
+	//게시판 좋아요 누를게 2번 방법
+//	@PostMapping("/board/like")
+//	public ResponseEntity<?> pushLikeButton(@RequestParam("user_id") int user_id, @RequestParam("board_id") int board_id){
+//
+//		Map<String, Integer> like = new HashMap<String, Integer>();
+//
+//		like.put("user_id", user_id);
+//		like.put("board_id", board_id);
+//
+//		int result = likeService.pushLike(like);
+//
+//		if(result == 0) {
+//			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+//		}
+//
+//		return new ResponseEntity<Void>(HttpStatus.OK);
+//	}
+
+
+	//게시판 좋아요 취소 따로
+//	@DeleteMapping("/story/dislike")
+//	public ResponseEntity<?> pushDislikeButton(@RequestParam("userId") int userId, @RequestParam("storyId") int storyId){
+//		Map<String, Integer> dislike = new HashMap<String, Integer>();
+//
+//		dislike.put("userId", userId);
+//		dislike.put("storyId", storyId);
+//
+//		int result = sServe.dislikeStory(dislike);
+//
+//		if(result == 0) {
+//			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+//		}
+//
+//		return new ResponseEntity<Void>(HttpStatus.OK);
+//	}
 
 }
 
