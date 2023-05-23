@@ -76,6 +76,15 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.search(condition);
 	}
 
+//	@Override
+//	public void unlike(int board_id) {
+//
+//	}
+//
+//	@Override
+//	public void dolike(int board_id) {
+//
+//	}
 
 	public static void main(String[] args){
 		String projectPath = System.getProperty("user.dir") + "";
