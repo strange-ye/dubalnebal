@@ -7,8 +7,10 @@
         INSERT INTO party
             (
              party_duration,
-             DATE_FORMAT(party_created_at, '%y-%m-%d %H:%i:%s') AS party_created_at,
-             DATE_FORMAT(party_depart_date, '%y-%m-%d %H:%i:%s') AS party_depart_date,
+             party_created_at,
+             party_depart_date,
+#              DATE_FORMAT(party_created_at, '%y-%m-%d %H:%i:%s') AS party_created_at,
+#              DATE_FORMAT(party_depart_date, '%y-%m-%d %H:%i:%s') AS party_depart_date,
              party_limit,
              Course_course_id,
              User_user_id,

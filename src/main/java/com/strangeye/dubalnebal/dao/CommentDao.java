@@ -10,7 +10,7 @@ public interface CommentDao {
 	//코멘트 전체
 	public List<Comment> selectAll(int board_id);
 
-	public int insertComment(Comment comment, int user_id);
+	public int insertComment(Comment comment);
 
 	public int deleteComment(int comment_id);
 

@@ -19,8 +19,8 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public Boolean writeComment(Comment comment, int user_id){
-		return commentDao.insertComment(comment, user_id) == 1;
+	public Boolean writeComment(Comment comment){
+		return commentDao.insertComment(comment) == 1;
 	}
 
 	@Override

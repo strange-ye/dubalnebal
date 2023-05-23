@@ -8,7 +8,7 @@ public interface CommentService {
 
 	public List<Comment> getCommentList(int board_id);
 
-	public Boolean writeComment(Comment comment, int user_identifier);
+	public Boolean writeComment(Comment comment);
 
 	public Boolean removeComment(int comment_id);
 

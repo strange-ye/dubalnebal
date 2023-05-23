@@ -42,14 +42,16 @@ public class CommentController {
 	//	게시판 등록하기
 	@PostMapping("/comment")
 	public ResponseEntity<?> write(@RequestBody Comment comment, HttpServletRequest request) throws UnsupportedEncodingException {
+		System.out.println(comment);
 		String token = request.getHeader("HEADER_AUTH");
 		Claims claims = jwtUtil.decodeToken(token);
 
 		String claimId = "id";
 		String user_identifier= claims.get(claimId, String.class);
 		User user_found = userService.selectUserByIdentifier(user_identifier);
+		comment.setUser_id(user_found.getUser_id());
 
-		commentService.writeComment(comment, user_found.getUser_id());
+		commentService.writeComment(comment);
 		return new ResponseEntity<>(comment, HttpStatus.CREATED);
 	}
 
