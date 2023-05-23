@@ -1,9 +1,11 @@
 package com.strangeye.dubalnebal.controller;
 
 import com.strangeye.dubalnebal.dto.Board;
+import com.strangeye.dubalnebal.dto.Like;
 import com.strangeye.dubalnebal.dto.SerchCondition;
 import com.strangeye.dubalnebal.dto.User;
 import com.strangeye.dubalnebal.service.BoardService;
+import com.strangeye.dubalnebal.service.LikeService;
 import com.strangeye.dubalnebal.service.UserService;
 import com.strangeye.dubalnebal.util.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -12,11 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
 
 @RestController
 @RequestMapping("/api")
@@ -27,6 +26,9 @@ public class BoardRestController {
 
 	@Autowired
 	private BoardService boardService;
+
+	@Autowired
+	private LikeService likeService;
 
 	@Autowired
 	private UserService userService;
@@ -89,6 +91,28 @@ public class BoardRestController {
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
+	//게시판 좋아요 누를게
+	@PostMapping("/board/like")
+	public ResponseEntity<?> pushLike(@RequestBody Like like){
+		System.out.println(like);
+
+		int id = like.getBoard_board_id();
+		if(likeService.hasLike(like)){
+			if(likeService.removeLike(like)){
+				boardService.unlike(id);
+				Board board = boardService.detailBoard(id);
+				return new ResponseEntity<Board>(board, HttpStatus.OK);
+			}
+		}
+		else{
+			if(likeService.pushLike(like)){
+				boardService.dolike(id);
+				Board board = boardService.detailBoard(id);
+				return new ResponseEntity<Board>(board, HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
 
 }
 

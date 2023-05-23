@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Like {
-	private int user_id;
-	private int board_id;
+	private int User_user_id;
+	private int Board_board_id;
 
 }
