@@ -21,6 +21,7 @@ public class Board {
 	private int user_id;
 	private String board_image;
 	private String user_name;
+	private String category;
 
 	private String filepath;
 

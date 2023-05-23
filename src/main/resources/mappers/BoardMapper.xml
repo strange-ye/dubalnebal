@@ -22,7 +22,7 @@
 
     <!-- 게시글 등록 -->
     <insert id="insertBoard" parameterType="com.strangeye.dubalnebal.dto.Board">
-        INSERT INTO board (board_content, board_title, User_user_id, board_image, category, )
+        INSERT INTO board (board_content, board_title, User_user_id, board_image, category )
         VALUES (#{board_content}, #{board_title}, #{user_id}, #{board_image}, #{category} )
     </insert>
 
