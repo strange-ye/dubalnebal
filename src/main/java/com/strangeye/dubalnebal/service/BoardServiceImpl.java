@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,26 +32,21 @@ public class BoardServiceImpl implements BoardService{
 
 
 	@Override
+	public Boolean writeBoard(Board board, MultipartFile file) throws IOException {
+		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static.files";
 
-	public Boolean writeBoard(Board board) {
-    
-//		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static.files";
-//
-//		UUID uuid = UUID.randomUUID(); //식별자 랜덤 이름 만들어줌
-//
-//		String fileName = uuid + "_" + file.getOriginalFilename();
-//
-//		File saveFile = new File(projectPath, fileName);
-//
-//		file.transferTo(saveFile);
-//
-//		board.setBoard_image();
-//		board.setFilepath();
+		UUID uuid = UUID.randomUUID(); //식별자 랜덤 이름 만들어줌
+
+		String fileName = uuid + "_" + file.getOriginalFilename();
+		File saveFile = new File(projectPath, fileName);
+		file.transferTo(saveFile);
+
+		board.setBoard_image(fileName);
+		board.setFilepath(fileName);
     
 		 return boardDao.insertBoard(board) == 1;
-    
 	}
-  
+
 	@Override
 	public Boolean removeBoard(int board_id) {
 		return boardDao.deleteBoard(board_id) == 1;

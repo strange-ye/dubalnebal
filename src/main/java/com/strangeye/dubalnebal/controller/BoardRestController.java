@@ -14,10 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
+import java.io.File;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api")
@@ -62,7 +63,7 @@ public class BoardRestController {
 
 	//게시판 등록하기
 	@PostMapping("/board")
-	public ResponseEntity<Board> write(@RequestBody Board board, HttpServletRequest request) throws Exception {
+	public ResponseEntity<Board> write(@RequestBody Board board, MultipartFile file, HttpServletRequest request) throws Exception {
 		System.out.println(board);
 		String token = request.getHeader("HEADER_AUTH");
 		Claims claims = jwtUtil.decodeToken(token);
@@ -74,7 +75,7 @@ public class BoardRestController {
 
 		System.out.println(user_found);
 		board.setUser_id(user_found.getUser_id());
-		boardService.writeBoard(board);
+		boardService.writeBoard(board, file);
 		return  new ResponseEntity<Board>(board, HttpStatus.CREATED);
 	}
 
@@ -134,41 +135,21 @@ public class BoardRestController {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
-	//게시판 좋아요 누를게 2번 방법
-//	@PostMapping("/board/like")
-//	public ResponseEntity<?> pushLikeButton(@RequestParam("user_id") int user_id, @RequestParam("board_id") int board_id){
-//
-//		Map<String, Integer> like = new HashMap<String, Integer>();
-//
-//		like.put("user_id", user_id);
-//		like.put("board_id", board_id);
-//
-//		int result = likeService.pushLike(like);
-//
-//		if(result == 0) {
-//			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-//		}
-//
-//		return new ResponseEntity<Void>(HttpStatus.OK);
-//	}
+	@PostMapping("/board/upload")
+	public ResponseEntity<Integer> uploadimg(@RequestParam("uploadFile")MultipartFile multipartFile){
+		String uploadFilePath = multipartFile.getOriginalFilename();
 
+		File folder = new File(uploadFilePath);
+		if(!folder.exists())
+			folder.mkdir();
 
-	//게시판 좋아요 취소 따로
-//	@DeleteMapping("/story/dislike")
-//	public ResponseEntity<?> pushDislikeButton(@RequestParam("userId") int userId, @RequestParam("storyId") int storyId){
-//		Map<String, Integer> dislike = new HashMap<String, Integer>();
-//
-//		dislike.put("userId", userId);
-//		dislike.put("storyId", storyId);
-//
-//		int result = sServe.dislikeStory(dislike);
-//
-//		if(result == 0) {
-//			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-//		}
-//
-//		return new ResponseEntity<Void>(HttpStatus.OK);
-//	}
+		String filename = multipartFile.getOriginalFilename();
+		File target = new File(uploadFilePath, filename);
+
+		return new ResponseEntity<Integer>(HttpStatus.OK);
+
+	}
+
 
 }
 

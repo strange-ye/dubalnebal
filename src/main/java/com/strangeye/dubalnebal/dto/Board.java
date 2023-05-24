@@ -23,6 +23,7 @@ public class Board {
 	private String user_name;
 	private String category;
 
+	private String filename;
 	private String filepath;
 
 	private String category;
