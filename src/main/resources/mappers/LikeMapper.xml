@@ -5,28 +5,26 @@
 
     <insert id="insertLike" parameterType="Map">
         INSERT INTO BoardLike
-        VALUES (#{user_id}, #{board_id});
+        VALUES (#{User_user_id}, #{Board_board_id});
     </insert>
 
-    <delete id="insertDislike" parameterType="Map">
+    <delete id="Dislike" parameterType="Map">
         DELETE FROM BoardLike
-        WHERE user_id = #{userId} AND board_id = #{board_id};
+        WHERE User_user_id = #{User_user_d} AND Board_board_id = #{Board_board_id};
     </delete>
 
 
     <select id="selectLikeCnt" parameterType="int">
-        SELECT COUNT(board_id)
+        SELECT COUNT(Board_board_id)
         FROM BoardLike
-        WHERE
+        WHERE Board_board_id = #{Board_board_id} AND User_user_id = #{User_user_d};
     </select>
 
 
-    <update id="minusLikeCount" parameterType="int">
-        UPDATE BoardLike
-        SET like = like - 1
-        WHERE board_id = #{board_id};
-    </update>
-
-
+<!--    <update id="minusLikeCount" parameterType="int">-->
+<!--        UPDATE BoardLike-->
+<!--        SET like = like - 1-->
+<!--        WHERE board_id = #{board_id};-->
+<!--    </update>-->
 
 </mapper>
