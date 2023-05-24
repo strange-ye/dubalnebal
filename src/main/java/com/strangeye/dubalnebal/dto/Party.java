@@ -14,12 +14,20 @@ import java.sql.Timestamp;
 public class Party {
 
 	private Integer party_id;
-	private Timestamp party_duration;
-	private Timestamp party_created_at;
-	private Timestamp party_depart_date;
+	private String party_duration;
+	private String party_created_at;
+	private String party_depart_date;
 	private Integer party_limit;
 	private Integer course_id;
 	private Integer user_id;
 	private String party_title;
+
+	private String course_name;
+	private String course_path;
+	private String course_location;
+	private String course_level;
+	private String course_km;
+	private String course_explain;
+	private String course_time;
 
 }

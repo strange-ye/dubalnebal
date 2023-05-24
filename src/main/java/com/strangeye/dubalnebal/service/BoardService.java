@@ -31,4 +31,5 @@ public interface BoardService {
 
 	public List<Board> search(SerchCondition condition);
 
+	public List<Board> myBoard(int user_id);
 }

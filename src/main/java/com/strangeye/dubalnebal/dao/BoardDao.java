@@ -28,5 +28,5 @@ public interface BoardDao {
 	//검색기능
 	public List<Board> search(SerchCondition condition);
 
-
+	public List<Board> myProfile(int user_id);
 }

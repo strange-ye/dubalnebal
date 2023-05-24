@@ -1,9 +1,10 @@
 package com.strangeye.dubalnebal.controller;
 
-import com.strangeye.dubalnebal.dto.Board;
 import com.strangeye.dubalnebal.dto.Party;
+import com.strangeye.dubalnebal.dto.Party_User;
 import com.strangeye.dubalnebal.dto.User;
 import com.strangeye.dubalnebal.service.PartyService;
+import com.strangeye.dubalnebal.service.PartyUserService;
 import com.strangeye.dubalnebal.service.UserService;
 import com.strangeye.dubalnebal.util.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -23,6 +25,9 @@ public class PartyController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PartyUserService partyUserService;
 
 	@Autowired
 	JwtUtil jwtUtil;
@@ -67,4 +72,26 @@ public class PartyController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
+	// 모든 파티 찾아오기
+	@GetMapping("/party")
+	public ResponseEntity<List<Party>> readAll() {
+		List<Party> list = partyService.readAll();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	// 파티 참여
+	@PostMapping("party/{party_id}")
+	public ResponseEntity<Integer> participate(@PathVariable int party_id, HttpServletRequest request) throws UnsupportedEncodingException {
+		String token = request.getHeader("HEADER_AUTH");
+		Claims claims = jwtUtil.decodeToken(token);
+
+		String claimId = "id";
+		String user_identifier= claims.get(claimId, String.class);
+		User user_found = userService.selectUserByIdentifier(user_identifier);
+		int user_id = user_found.getUser_id();
+
+		Party_User partyUser = new Party_User(party_id, user_id);
+		int result = partyUserService.participateParty(partyUser);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

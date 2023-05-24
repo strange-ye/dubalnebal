@@ -76,6 +76,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.search(condition);
 	}
 
+	@Override
+	public List<Board> myBoard(int user_id) {
+		return boardDao.myProfile(user_id);
+	}
+
 
 	public static void main(String[] args){
 		String projectPath = System.getProperty("user.dir") + "";
