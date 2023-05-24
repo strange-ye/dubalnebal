@@ -37,5 +37,6 @@ public interface BoardDao {
 	//사용자가 올릴 파일 이름원본
 	public String Board_image(Board board);
 
+	public List<Board> myProfile(int user_id);
 
 }

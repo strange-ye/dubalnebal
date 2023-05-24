@@ -14,7 +14,7 @@
              party_limit,
              Course_course_id,
              User_user_id,
-             party_title
+             title
              )
         VALUES
             (
@@ -42,7 +42,7 @@
             party_duration = #{party_duration},
             party_depart_date = #{party_depart_date},
             party_limit = #{party_limit},
-            party_title = #{party_title}
+            title = #{party_title}
         WHERE
             party_id = #{party_id}
     </update>
@@ -52,4 +52,17 @@
         DELETE FROM party
         WHERE party_id = #{party_id}
     </delete>
+
+    <select id="selectAll" resultType="com.strangeye.dubalnebal.dto.Party">
+        SELECT *
+#             party_id, date_format(party_duration, '%y-%m-%d %H:%i:%s') as party_duration , date_format(party_created_at, '%y-%m-%d') as party_created_at, date_format(party_depart_date, '%y-%m-%d') as party_depart_date, party_limit, title
+#                category, board_image, user_name
+        FROM party p
+                 inner join course c on c.course_id = p.Course_course_id;
+    </select>
+
+    <insert id="participateParty" >
+
+    </insert>
+
 </mapper>

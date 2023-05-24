@@ -19,7 +19,7 @@ public class JwtUtil {
 				.setHeaderParam("alg", "HS256")
 				.setHeaderParam("typ", "JWT")
 				.claim(claimId, data)
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12))
 				.signWith(SignatureAlgorithm.HS256, SALT.getBytes("UTF-8"))
 				.compact();
 	}
