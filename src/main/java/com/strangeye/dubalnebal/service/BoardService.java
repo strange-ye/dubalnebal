@@ -6,6 +6,7 @@ import com.strangeye.dubalnebal.dto.SerchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface BoardService {
@@ -18,7 +19,7 @@ public interface BoardService {
 	public Board detailBoard(int board_id);
 
 	//게시글 등록
-	public Boolean writeBoard(Board board);
+	public Boolean writeBoard(Board board, MultipartFile file) throws IOException;
 
 	//게시글 삭제
 	public Boolean removeBoard(int board_id);
@@ -31,8 +32,5 @@ public interface BoardService {
 
 	public List<Board> search(SerchCondition condition);
 
-	//조하요 취소
-//	public void unlike(int board_id);
-//
-//	public void dolike(int board_id);
+
 }

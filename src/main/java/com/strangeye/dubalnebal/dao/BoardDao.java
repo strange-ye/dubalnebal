@@ -28,5 +28,14 @@ public interface BoardDao {
 	//검색기능
 	public List<Board> search(SerchCondition condition);
 
+	//저장될 파일 이름
+	public String filename(int board_id);
+
+	//파일 경로
+//	public String filepath(int board_id);
+
+	//사용자가 올릴 파일 이름원본
+	public String Board_image(Board board);
+
 
 }
