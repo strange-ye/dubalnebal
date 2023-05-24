@@ -17,12 +17,12 @@
                category, board_image, user_name
         FROM board b
         INNER JOIN user u ON u.user_id = b.User_user_id
-        WHERE u.user_id = #{User_user_id};
+        WHERE b.board_id = #{board_id};
     </select>
 
     <!-- 게시글 등록 -->
     <insert id="insertBoard" parameterType="com.strangeye.dubalnebal.dto.Board">
-        INSERT INTO board (board_content, board_title, User_user_id, board_image, category )
+        INSERT INTO board (board_content, board_title, User_user_id, board_image, category)
         VALUES (#{board_content}, #{board_title}, #{user_id}, #{board_image}, #{category} )
     </insert>
 
@@ -42,7 +42,7 @@
     <!-- 게시글 수정 -->
     <update id="updateBoard" parameterType="Board">
         UPDATE board
-        SET board_title = #{board_title}, board_content=#{board_content}, board_updated_at = now()
+        SET board_title = #{board_title}, board_content=#{board_content}, board_updated_at = now(), category=#{category}
         WHERE board_id= #{board_id}
     </update>
 
@@ -61,4 +61,9 @@
         </if>
     </select>
 
+    <select id="myProfile" resultType="com.strangeye.dubalnebal.dto.Board">
+        SELECT *
+        FROM Board
+        WHERE User_user_id = #{user_id}
+    </select>
 </mapper>

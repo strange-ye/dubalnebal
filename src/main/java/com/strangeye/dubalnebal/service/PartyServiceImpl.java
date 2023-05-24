@@ -5,6 +5,8 @@ import com.strangeye.dubalnebal.dto.Party;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PartyServiceImpl implements PartyService{
 	@Autowired
@@ -29,6 +31,11 @@ public class PartyServiceImpl implements PartyService{
 	@Override
 	public int deleteParty(int party_id) {
 		return partyDao.deleteParty(party_id);
+	}
+
+	@Override
+	public List<Party> readAll() {
+		return partyDao.selectAll();
 	}
 
 }

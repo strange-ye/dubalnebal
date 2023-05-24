@@ -51,7 +51,9 @@ public class BoardRestController {
 	//상세 게시글 가져오기
 	@GetMapping("/board/{board_id}")
 	public ResponseEntity<?> detail(@PathVariable int board_id){
+		System.out.println(board_id);
 		try {
+			System.out.println(boardService.detailBoard(board_id));
 			return new ResponseEntity<Board>(boardService.detailBoard(board_id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -89,8 +91,24 @@ public class BoardRestController {
 	//modify board
 	@PutMapping("/board")
 	public ResponseEntity<String> update(@RequestBody Board board){
+		System.out.println(board);
 		boardService.modifyBoard(board);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+
+
+	@GetMapping("/board/profile")
+	public ResponseEntity<List<Board>> myBoard( HttpServletRequest request) throws Exception {
+		String token = request.getHeader("HEADER_AUTH");
+		Claims claims = jwtUtil.decodeToken(token);
+
+		String claimId = "id";
+		String user_identifier= claims.get(claimId, String.class);
+//		System.out.println(user_identifier);
+		User user_found = userService.selectUserByIdentifier(user_identifier);
+
+		List<Board> list = boardService.myBoard(user_found.getUser_id());
+		return  new ResponseEntity<>(list, HttpStatus.CREATED);
 	}
 
 	//게시판 좋아요 누를게

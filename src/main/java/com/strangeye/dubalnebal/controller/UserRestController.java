@@ -69,7 +69,6 @@ public class UserRestController {
 
 		String claimId = "id";
 		String user_identifier= claims.get(claimId, String.class);
-		user.setUser_identifier(user_identifier);
 
 		int result = userService.updateUser(user);
 		return new ResponseEntity<Integer>(result, HttpStatus.ACCEPTED);
@@ -86,6 +85,20 @@ public class UserRestController {
 
 		int result = userService.deleteUser(user_identifier);
 		return new ResponseEntity<Integer>(result, HttpStatus.ACCEPTED);
+	}
+
+	@GetMapping("profile")
+	public ResponseEntity<User> profile(HttpServletRequest request) throws UnsupportedEncodingException {
+		String token = request.getHeader("HEADER_AUTH");
+		Claims claims = jwtUtil.decodeToken(token);
+
+		String claimId = "id";
+		String user_identifier= claims.get(claimId, String.class);
+
+		User result = userService.selectUserByIdentifier(user_identifier);
+		result.setUser_password("");
+//		System.out.println(result);
+		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 
 }

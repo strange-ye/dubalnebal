@@ -3,6 +3,8 @@ package com.strangeye.dubalnebal.dao;
 import com.strangeye.dubalnebal.dto.Party;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface PartyDao {
 
@@ -17,4 +19,8 @@ public interface PartyDao {
 
 	// id로 파티 삭제
 	int deleteParty(int party_id);
+
+	// 모든 파티 가져오기
+	List<Party> selectAll();
+
 }

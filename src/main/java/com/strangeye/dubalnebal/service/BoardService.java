@@ -31,8 +31,12 @@ public interface BoardService {
 
 	public List<Board> search(SerchCondition condition);
 
+
+	public List<Board> myBoard(int user_id);
+
 	//조하요 취소
 //	public void unlike(int board_id);
 //
 //	public void dolike(int board_id);
+
 }
