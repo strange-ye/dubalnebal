@@ -15,4 +15,10 @@
         )
     </insert>
 
+    <select id="">
+        SELECT COUNT(*) AS user_count
+        FROM User_Party
+        WHERE Party_party_id = #{party_id};
+    </select>
+
 </mapper>

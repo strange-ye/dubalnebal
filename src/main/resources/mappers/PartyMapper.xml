@@ -54,15 +54,19 @@
     </delete>
 
     <select id="selectAll" resultType="com.strangeye.dubalnebal.dto.Party">
-        SELECT *
-#             party_id, date_format(party_duration, '%y-%m-%d %H:%i:%s') as party_duration , date_format(party_created_at, '%y-%m-%d') as party_created_at, date_format(party_depart_date, '%y-%m-%d') as party_depart_date, party_limit, title
-#                category, board_image, user_name
-        FROM party p
-                 inner join course c on c.course_id = p.Course_course_id;
+        SELECT
+            p.*,
+            c.*,
+            (SELECT COUNT(*) FROM User_Party pu WHERE pu.Party_party_id = p.party_id) AS user_count
+        FROM
+            party p
+        inner join course c on c.course_id = p.Course_course_id;
     </select>
 
     <insert id="participateParty" >
-
+        SELECT COUNT(*) AS user_count
+        FROM User_Party
+        WHERE Party_party_id = #{party_id};
     </insert>
 
 </mapper>

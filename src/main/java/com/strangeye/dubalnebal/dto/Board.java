@@ -21,12 +21,12 @@ public class Board {
 	private int user_id;
 	private String board_image;
 	private String user_name;
+
+	private String user_image;
 	private String category;
 
 	private String filename;
 	private String filepath;
-
-	private String category;
 
 }
 

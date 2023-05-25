@@ -13,4 +13,5 @@ public interface PartyService {
 
 	List<Party> readAll();
 
+	int getParticipantNumber(int party_id);
 }

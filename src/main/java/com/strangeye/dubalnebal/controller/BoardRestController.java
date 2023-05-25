@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api")
@@ -43,16 +43,25 @@ public class BoardRestController {
 	@GetMapping("/board")
 	public ResponseEntity<?> list(SerchCondition condition){
 //		List<Board> list = boardService.getBoardList();
+		System.out.println(condition);
 		List<Board> list = boardService.search(condition);
 
 		if(list == null || list.size() == 0)
 			return  new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		return  new ResponseEntity<List<Board>>(list, HttpStatus.OK);
 	}
+
+	@GetMapping("/board/all")
+	public ResponseEntity<?> listAll(){
+//		List<Board> list = boardService.getBoardList();
+		List<Board> list = boardService.getBoardList();
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
 	//상세 게시글 가져오기
 	@GetMapping("/board/{board_id}")
 	public ResponseEntity<?> detail(@PathVariable int board_id){
-		System.out.println(board_id);
 		try {
 			System.out.println(boardService.detailBoard(board_id));
 			return new ResponseEntity<Board>(boardService.detailBoard(board_id), HttpStatus.OK);
@@ -63,7 +72,7 @@ public class BoardRestController {
 
 	//게시판 등록하기
 	@PostMapping("/board")
-	public ResponseEntity<Board> write(@RequestBody Board board, MultipartFile file, HttpServletRequest request) throws Exception {
+	public ResponseEntity<Board> write(Board board, @RequestParam MultipartFile file, HttpServletRequest request) throws Exception {
 		System.out.println(board);
 		String token = request.getHeader("HEADER_AUTH");
 		Claims claims = jwtUtil.decodeToken(token);
@@ -99,7 +108,7 @@ public class BoardRestController {
 
 
 	@GetMapping("/board/profile")
-	public ResponseEntity<List<Board>> myBoard( HttpServletRequest request) throws Exception {
+	public ResponseEntity<List<Board>> myBoard(HttpServletRequest request) throws Exception {
 		String token = request.getHeader("HEADER_AUTH");
 		Claims claims = jwtUtil.decodeToken(token);
 
@@ -114,12 +123,20 @@ public class BoardRestController {
 
 	//게시판 좋아요 누를게
 	@PostMapping("/board/like")
-	public ResponseEntity<?> pushLike(@RequestBody Like like){
-		System.out.println(like);
+	public ResponseEntity<?> pushLike(Like like, HttpServletRequest request) throws UnsupportedEncodingException {
+		String token = request.getHeader("HEADER_AUTH");
+		Claims claims = jwtUtil.decodeToken(token);
+
+		String claimId = "id";
+		String user_identifier= claims.get(claimId, String.class);
+//		System.out.println(user_identifier);
+		User user_found = userService.selectUserByIdentifier(user_identifier);
 
 		int id = like.getBoard_board_id();
-		if(likeService.hasLike(like)){
-			if(likeService.removeLike(like)){
+		like.setUser_user_id(user_found.getUser_id());
+		System.out.println(like);
+		if (likeService.hasLike(like)){
+			if (likeService.removeLike(like)){
 //				boardService.unlike(id);
 //				Board board = boardService.detailBoard(id);
 				return new ResponseEntity<>(HttpStatus.OK);
@@ -133,6 +150,35 @@ public class BoardRestController {
 			}
 		}
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
+	// 좋아요 눌렀는지 체크
+	@GetMapping("/board/like/{board_id}")
+	public ResponseEntity<?> getLike(@PathVariable int board_id, HttpServletRequest request) throws UnsupportedEncodingException {
+		System.out.println(board_id);
+
+		String token = request.getHeader("HEADER_AUTH");
+		Claims claims = jwtUtil.decodeToken(token);
+
+		String claimId = "id";
+		String user_identifier= claims.get(claimId, String.class);
+//		System.out.println(user_identifier);
+		if (user_identifier == null) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+
+		User user_found = userService.selectUserByIdentifier(user_identifier);
+		Like like = new Like(user_found.getUser_id(), board_id);
+		boolean result = likeService.hasLike(like);
+
+		System.out.println(result);
+		if (result) {
+			System.out.println("no heart");
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+
+		System.out.println("yes heart");
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/board/upload")

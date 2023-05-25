@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,21 +58,24 @@ public class UserRestController {
 
 	// 회원가입. 사용자 정보를 받아서 회원가입한다.
 	@PostMapping("/signup")
-	public ResponseEntity<Integer> signup(@RequestBody User user) {
-		int result = userService.insertUser(user);
+	public ResponseEntity<Integer> signup(User user, @RequestParam MultipartFile file) throws IOException {
+		System.out.println(user);
+		int result = userService.insertUser(user, file);
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 
 	// 기존에 존재하는 사용자의 데이터를 업데이트 해준다.
 	@PostMapping("/update")
-	public ResponseEntity<Integer> update(@RequestBody User user, HttpServletRequest request) throws UnsupportedEncodingException {
+	public ResponseEntity<Integer> update(User user, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
 		String token = request.getHeader("HEADER_AUTH");
 		Claims claims = jwtUtil.decodeToken(token);
 
 		String claimId = "id";
 		String user_identifier= claims.get(claimId, String.class);
+		User user_found = userService.selectUserByIdentifier(user_identifier);
 
-		int result = userService.updateUser(user);
+		user.setUser_id(user_found.getUser_id());
+		int result = userService.updateUser(user, file);
 		return new ResponseEntity<Integer>(result, HttpStatus.ACCEPTED);
 	}
 

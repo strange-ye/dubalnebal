@@ -23,4 +23,6 @@ public interface PartyDao {
 	// 모든 파티 가져오기
 	List<Party> selectAll();
 
+	int count(int party_id);
+
 }
