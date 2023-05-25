@@ -6,7 +6,7 @@
     <!-- 전체글 조회 -->
     <select id="selectAll" resultType="com.strangeye.dubalnebal.dto.Board">
         SELECT board_id, board_content , board_title , board_view_cnt , date_format(board_updated_at, '%y-%m-%d %H:%i:%s') as board_updated_at , date_format(board_created_at, '%y-%m-%d') as board_created_at,
-               category, board_image, user_name
+               category, board_image, user_name, user_image
         FROM board b
         inner join user u on u.user_id = b.User_user_id;
     </select>
@@ -14,7 +14,7 @@
     <!-- 상세글 조회-->
     <select id="selectOne" parameterType="int" resultType="com.strangeye.dubalnebal.dto.Board">
         SELECT board_id, board_content, board_title, board_view_cnt, DATE_FORMAT(board_updated_at, '%y-%m-%d %H:%i:%s') AS board_updated_at, DATE_FORMAT(board_created_at, '%y-%m-%d') AS board_created_at,
-               board_image, category, board_image, user_name
+               board_image, category, board_image, user_name, user_image
         FROM board b
         INNER JOIN user u ON u.user_id = b.User_user_id
         WHERE b.board_id = #{board_id};
@@ -47,23 +47,21 @@
     </update>
 
     <!--검색기능 -->
-    <select id="search" resultType="com.strangeye.dubalnebal.dto.Board">
-        SELECT board_id, board_content , board_title , board_view_cnt , date_format(board_updated_at, '%y-%m-%d %H:%i:%s') as board_updated_at , date_format(board_created_at, '%y-%m-%d') as board_created_at,
-               board_image, user_name
+    <select id="search" parameterType="com.strangeye.dubalnebal.dto.SerchCondition" resultType="com.strangeye.dubalnebal.dto.Board">
+        SELECT board_id, board_content , board_title , board_view_cnt , date_format(board_updated_at, '%y-%m-%d %H:%i:%s') as board_updated_at , date_format(board_created_at, '%y-%m-%d') as board_created_at, board_image, user_name, u.user_image
         FROM board b
-        inner join user u on u.user_id = b.User_user_id;
-        <if test="key != 'none'">
-            WHERE ${key} LIKE concat('%', #{word}, '%')
-        </if>
-
-        <if test="orderBy != 'none' ">
-            ORDER BY ${orderBy} ${orderByDir}
-        </if>
+        inner join user u on u.user_id = b.User_user_id
+        WHERE board_title LIKE concat('%', #{word}, '%')
+<!--        <if test="orderBy != 'none' ">-->
+<!--            ORDER BY ${orderBy} ${orderByDir}-->
+<!--        </if>-->
     </select>
 
     <select id="myProfile" resultType="com.strangeye.dubalnebal.dto.Board">
         SELECT *
-        FROM Board
+        FROM Board b
+        inner join user u on u.user_id = b.User_user_id
         WHERE User_user_id = #{user_id}
     </select>
+
 </mapper>

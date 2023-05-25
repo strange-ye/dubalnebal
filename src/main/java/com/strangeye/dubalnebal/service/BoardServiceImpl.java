@@ -33,12 +33,19 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public Boolean writeBoard(Board board, MultipartFile file) throws IOException {
-		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static.files";
-
+//		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static";
+		// 자기 프로젝트 경로에 맞게 설정
+		String projectPath = "/Users/sangholee/Github/dubalnebal-front/public/image";
+		System.out.println(projectPath);
 		UUID uuid = UUID.randomUUID(); //식별자 랜덤 이름 만들어줌
 
 		String fileName = uuid + "_" + file.getOriginalFilename();
+		File saveDirectory = new File(projectPath);
+		if (!saveDirectory.exists()) {
+			saveDirectory.mkdirs(); // 디렉토리가 존재하지 않으면 생성합니다.
+		}
 		File saveFile = new File(projectPath, fileName);
+		System.out.println(projectPath);
 		file.transferTo(saveFile);
 
 		board.setBoard_image(fileName);

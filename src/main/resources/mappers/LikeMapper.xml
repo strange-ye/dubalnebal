@@ -8,16 +8,16 @@
         VALUES (#{User_user_id}, #{Board_board_id});
     </insert>
 
-    <delete id="Dislike" parameterType="Map">
+    <delete id="disLike" parameterType="com.strangeye.dubalnebal.dto.Like">
         DELETE FROM BoardLike
-        WHERE User_user_id = #{User_user_d} AND Board_board_id = #{Board_board_id};
+        WHERE User_user_id = #{User_user_id} AND Board_board_id = #{Board_board_id};
     </delete>
 
 
-    <select id="selectLikeCnt" parameterType="int">
+    <select id="selectLikeCnt" parameterType="int" resultType="int">
         SELECT COUNT(Board_board_id)
         FROM BoardLike
-        WHERE Board_board_id = #{Board_board_id} AND User_user_id = #{User_user_d};
+        WHERE Board_board_id = #{Board_board_id} AND User_user_id = #{User_user_id};
     </select>
 
 

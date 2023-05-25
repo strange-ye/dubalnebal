@@ -38,4 +38,9 @@ public class PartyServiceImpl implements PartyService{
 		return partyDao.selectAll();
 	}
 
+	@Override
+	public int getParticipantNumber(int party_id) {
+		return partyDao.count(party_id);
+	}
+
 }

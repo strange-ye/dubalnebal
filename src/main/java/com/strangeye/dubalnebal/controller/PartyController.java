@@ -53,6 +53,7 @@ public class PartyController {
 	// id로 파티 정보 가져오기
 	@GetMapping("/party/{id}")
 	public ResponseEntity<Party> read(@PathVariable int id) {
+
 		return new ResponseEntity<>(partyService.readParty(id), HttpStatus.OK);
 	}
 
@@ -94,4 +95,12 @@ public class PartyController {
 		int result = partyUserService.participateParty(partyUser);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
+	// 현재 참여자 수 구하기
+	@GetMapping("party/{party_id}")
+	public ResponseEntity<Integer> countParticipant(@PathVariable int party_id) {
+		int result = partyService.getParticipantNumber(party_id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 }

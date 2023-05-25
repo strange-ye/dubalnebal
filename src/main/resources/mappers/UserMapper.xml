@@ -9,14 +9,16 @@
             user_identifier,
             user_password,
             user_name,
-            user_email
+            user_email,
+            user_image
         )
         VALUES
             (
                 #{user_identifier},
                 #{user_password},
                 #{user_name},
-                #{user_email}
+                #{user_email},
+                #{user_image}
             );
     </insert>
 
@@ -36,7 +38,7 @@
             user_name = #{user_name},
             user_email = #{user_email},
             user_image = #{user_image}
-        WHERE user_identifier = #{user_identifier}
+        WHERE user_id = #{user_id}
     </update>
 
     <!-- 로그인 아이디로 사용자를 찾아서 삭제 -->

@@ -21,7 +21,7 @@ public class Party {
 	private Integer course_id;
 	private Integer user_id;
 	private String party_title;
-
+	private int user_count;
 	private String course_name;
 	private String course_path;
 	private String course_location;
